@@ -38,7 +38,10 @@ function InternShipCard({ internship }) {
                 <Text style={{ textAlign: 'center', paddingHorizontal: responsiveWidth(3), paddingVertical: responsiveHeight(0.7), flexWrap: 'wrap' }}>Internship</Text>
             </View>
             <View style={styles.controllers}>
-                <TouchableOpacity style={[styles.control, { backgroundColor: color.white }]} onPress={()=>navigation.navigate("Details")}>
+                <TouchableOpacity style={[styles.control, { backgroundColor: color.white }]} onPress={() => {
+                    navigation.navigate("Details", { internship: internship});
+                    console.log("Navigating");
+                }}>
                     <Text style={[styles.btn, { color: color.blue }]}>View Details</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.control, { backgroundColor: color.blue }]}>
@@ -54,12 +57,14 @@ export default InternShipCard
 
 const styles = StyleSheet.create({
     card: {
-        height: responsiveHeight(37),
+        height: responsiveHeight(39),
         borderColor: color.border,
+        borderRadius : responsiveHeight(1),
         backgroundColor: color.white,
-        marginVertical: responsiveHeight(0.5),
+        marginVertical: responsiveHeight(.7),
         shadowColor: color.shadow,
-        elevation: 10
+        elevation: 10,
+        marginHorizontal : responsiveWidth(2)
     },
     locationdetails: {
         flexDirection: 'row',

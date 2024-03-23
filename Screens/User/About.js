@@ -19,11 +19,11 @@ export default function Chat() {
         <View style={{ flex: 1 }} >
             <TouchableWithoutFeedback onPress={handleoutclick}>
                 <View style={{ flex: 1 }}>
-                    <Header setDrawer={setDrawer}/>
+                    <Header setDrawer={setDrawer} />
                     <Text>Chats</Text>
                 </View>
             </TouchableWithoutFeedback>
-            {drawer ? <Drawer ref={drawerRef} setDrawer={setDrawer}/> : null}
+            {drawer ? <Drawer ref={drawerRef} setDrawer={setDrawer} /> : null}
         </View>
     )
 }

@@ -15,8 +15,6 @@ export const AuthProvider = ({ childrens }) => {
     const [token, setToken] = useState(null)
     const [isAutheticated, setisauthenticated] = useState(false)
     const [Loading, setLoading] = useState(true)
-    // const [drawer,setDrawer] = useState(false);
-
     useEffect(() => {
         setLoading(true)
         const getUser = async () => {
@@ -35,9 +33,7 @@ export const AuthProvider = ({ childrens }) => {
     }, [])
 
     const register = (email, password, name) => {
-        // setLoading(true);
         console.log(email, password, name)
-
         fetch(`http://${ip}:5001/auth/signup`, {
             method: "PUT",
             headers: {
@@ -90,7 +86,6 @@ export const AuthProvider = ({ childrens }) => {
                 })
             })
             .then(response => {
-                // console.log(response);
                 if (response.status == 200 || response.status == 201)
                     return response.json();
                 return Promise.reject(new Error("Invalid Credentials"))
@@ -103,7 +98,7 @@ export const AuthProvider = ({ childrens }) => {
                     position: 'top',
                     text1: 'Login Successful',
                     text1Style: { fontSize: responsiveFontSize(2), letterSpacing: 1 },
-                    autoHide: 2000
+                    autoHide: 300
                 })
                 setTimeout(() => {
                     setLoading(false)
@@ -111,7 +106,7 @@ export const AuthProvider = ({ childrens }) => {
                     setname(res.name);
                     setToken(res.token)
                     setisauthenticated(true)
-                }, 2000)
+                }, 400)
             })
             .catch(err => {
                 console.log(err);

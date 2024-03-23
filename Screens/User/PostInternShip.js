@@ -29,6 +29,7 @@ export default function PostInternShip() {
     const [skills, setskills] = useState([]);
     const [skill, setskill] = useState("");
     const [about, setAbout] = useState();
+    const [abouts, setAbouts] = useState([])
     const [no_of_opening, setopening] = useState(0)
 
 
@@ -50,7 +51,7 @@ export default function PostInternShip() {
                 Authorization: 'Bearer ' + token
             },
             body: JSON.stringify({
-                title, company_name, location, start_date, expiry_date: end_date, skills, About: [about], no_of_opening
+                title, company_name, location, start_date, expiry_date: end_date, skills, About: abouts, no_of_opening
             })
         })
             .then(res => {
@@ -82,7 +83,7 @@ export default function PostInternShip() {
                     text1Style: { fontSize: responsiveFontSize(2), fontFamily: 'Roboto', letterSpacing: 1 }
                 })
             })
-        setAbout('');
+        setAbouts([]);
         setTitle('');
         setCompany("");
         setendDate(new Date());
@@ -95,6 +96,15 @@ export default function PostInternShip() {
 
     const removeSkill = (value) => {
         setskills(prev => {
+            return prev.filter((val) => {
+                return value.toString() !== val.toString();
+            })
+        })
+    }
+
+    const removeAbout = (value) => {
+        console.log(value);
+        setAbouts(prev => {
             return prev.filter((val) => {
                 return value.toString() !== val.toString();
             })
@@ -199,30 +209,56 @@ export default function PostInternShip() {
                                             <Text style={{ textAlign: 'center', color: color.white, fontWeight: '600', fontSize: responsiveFontSize(2) }}>Add</Text>
                                         </TouchableOpacity>
                                     </View>
-                                </Animated.View>
-                                <Animated.View entering={FadeInDown.delay(200).duration(500)} style={styles.input} >
+                                    <View style={styles.input}>
+                                        <View style={{ flexDirection: 'row', gap: responsiveWidth(1), flexWrap: 'wrap', }}>
+                                            {abouts.length > 0 && abouts.map((value, index) => {
+                                                return (<Animated.View entering={FadeInDown.duration(300)} key={index} exiting={FadeOutDown.duration(200)} style={{ flexDirection: 'row', backgroundColor: color.red, paddingVertical: responsiveHeight(1), paddingHorizontal: responsiveWidth(3), borderRadius: responsiveHeight(1) }}>
+                                                    <TouchableOpacity onPress={() => removeAbout(value)} style={{ flexDirection: 'row', gap: responsiveWidth(4), justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Text style={{ color: color.white, fontWeight: '700' }}>{value}</Text>
+                                                        <Image source={require('../../assets/trash.png')} style={{ height: responsiveHeight(1.7), width: responsiveHeight(1.7), tintColor: color.white }} />
+                                                    </TouchableOpacity>
 
-                                    <View style={styles.iplabelwrapper}>
-                                        <View style={styles.autoSizedView}>
-                                            <Text style={styles.iplabel}>About</Text>
+                                                </Animated.View>)
+                                            })}
                                         </View>
                                     </View>
-                                    <TextInput style={styles.ipcont} value={about} onChangeText={(val) => { setAbout(val) }} />
+                                </Animated.View>
+                                <Animated.View entering={FadeInDown.delay(200).duration(500)} style={[styles.input]}>
+                                    <View style={styles.iplabelwrapper}>
+                                        <View style={styles.autoSizedView}>
+                                            <Text style={styles.iplabel}>About Job</Text>
+                                        </View>
+                                    </View>
+                                    <View style={[styles.ipcont, { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap', paddingVertical: responsiveHeight(0) }]}>
+                                        <TextInput value={about} style={{ width: responsiveWidth(60) }} onChangeText={(val) => { setAbout(val) }} />
+                                        <TouchableOpacity style={{ height: "100%", alignItems: 'center', backgroundColor: color.blue, paddingHorizontal: responsiveWidth(3), borderRadius: responsiveHeight(1), paddingVertical: responsiveHeight(1) }}
+                                            onPress={() => {
+                                                if (about.length > 0) {
+                                                    setAbouts(prev => {
+                                                        // console.log(`${skill}`);
+                                                        return [...prev, about]
+                                                    })
+                                                    setAbout("")
+                                                }
+                                                console.log(skills);
+                                            }}>
+                                            <Text style={{ textAlign: 'center', color: color.white, fontWeight: '600', fontSize: responsiveFontSize(2) }}>Add</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </Animated.View>
                                 <Animated.View entering={FadeInDown.delay(200).duration(500)} style={styles.input}>
                                     <View style={styles.iplabelwrapper}>
                                         <View style={styles.autoSizedView}>
-                                            <Text style={styles.iplabel} value={no_of_opening} onChangeText={(val) => { setopening(val) }}>No of Opening</Text>
+                                            <Text style={styles.iplabel}>No of Opening</Text>
                                         </View>
                                     </View>
-                                    <TextInput style={styles.ipcont} />
+                                    <TextInput style={styles.ipcont} multiline={true} value={no_of_opening.toString()} keyboardType='number-pad' onChangeText={(val) => { setopening(val) }} />
                                 </Animated.View>
                                 <Animated.View entering={FadeInDown.delay(300).duration(500)} style={styles.btnContainer}>
                                     <TouchableOpacity onPress={postInternship} style={{ height: '100%', width: "100%", alignItems: 'center', justifyContent: 'center', backgroundColor: color.blue, borderRadius: responsiveHeight(2) }} >
                                         <Text style={{ fontWeight: '700', fontSize: responsiveFontSize(2.4), letterSpacing: 1, color: '#fff' }}>Post</Text>
                                     </TouchableOpacity>
                                 </Animated.View>
-
                             </View>
                         </ScrollView>
                     </KeyboardAvoidingView>

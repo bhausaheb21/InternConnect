@@ -18,7 +18,7 @@ export default function Login() {
     const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
     const navigation = useNavigation()
-    const { username, login } = useContext(AuthContext)
+    const { login } = useContext(AuthContext)
 
     return (
         <KeyboardAvoidingView behavior='height' style={styles.container}>
@@ -34,7 +34,7 @@ export default function Login() {
                     <View style={{ width: '100%', height: '100%', alignItems: 'center' }}>
 
                         <Animated.View entering={FadeInDown.delay(100).duration(500)}>
-                            <TextInput placeholder='Email' style={styles.input} value={email} onChangeText={(val) => setemail(val)} />
+                            <TextInput placeholder='Email' keyboardType="email-address" style={styles.input} value={email} onChangeText={(val) => setemail(val)} />
                         </Animated.View>
                         <Animated.View entering={FadeInDown.delay(200).duration(500)}>
                             <TextInput placeholder='Password' style={styles.input} secureTextEntry={true} value={password} onChangeText={(value) => setpassword(value)} />

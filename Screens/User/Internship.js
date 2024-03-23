@@ -11,9 +11,9 @@ export default function Internship() {
     const drawerRef = useRef(null)
     const [drawer, setDrawer] = useState(false)
     const navigation = useNavigation()
-
-
     const [internships, setInternShips] = useState([])
+
+
     useEffect(() => {
         const getInternships = async () => {
             try {
@@ -28,14 +28,12 @@ export default function Internship() {
         getInternships()
     }, [])
 
-
     const handleoutclick = (event) => {
         const isInsideDrawer = drawerRef.current && event.target === drawerRef.current;
         if (!isInsideDrawer) {
             setDrawer(false)
         }
     }
-
     return (
         <View style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={handleoutclick}>
